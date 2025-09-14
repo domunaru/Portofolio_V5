@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio - Programmer & Hardware Enthusiast</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #4e2d7f, #6a5acd, #4682b4, #2e8b57);
+      background-size: 300% 300%;
+      animation: aurora 15s ease infinite;
+      color: #eee;
+      overflow-x: hidden;
+    }
+    @keyframes aurora {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    header, section, footer {
+      position: relative;
+      z-index: 1;
+    }
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      background: rgba(0,0,0,0.3);
+    }
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    section {
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h2 {
+      color: #fff;
+      border-bottom: 2px solid rgba(255,255,255,0.3);
+      padding-bottom: 5px;
+    }
+    .card {
+      background: rgba(255,255,255,0.08);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li::before {
+      content: "💻 ";
+    }
+    a {
+      color: #ffdd57;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .img-banner {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: rgba(0,0,0,0.4);
+      color: #ddd;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Canvas untuk bintang -->
+  <canvas id="stars"></canvas>
+
+  <header>
+    <h1>My Portfolio</h1>
+    <p>Programmer (Intermediate) | Hardware & Automation Enthusiast</p>
+  </header>
+
+  <section>
+    <!-- Banner Image -->
+    <img class="img-banner" src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="Programming Illustration">
+
+    <h2>About Me</h2>
+    <div class="card">
+      <p>
+    Let me introduce myself, Meet Pardomuan Butar Butar, I am 16 years old, currently studying at Senior High School (SMK)
+     I master Indonesian very well, I also master programming languages ​​well and I am interested in video editing and design. 
+     Perkenalkan saya Jumpa Pardomuan Butar Butar saya berusia 16 tahun sedang duduk di Sekolah Menengah Ke atas (SMK)
+     saya menguasai bahasa indonesiaa dengann sangatt baikk saya juga menguasai bahasa pemrograman dengan baik 
+     dan saya tertarik dengan video editing serta desain
+      </p>
+    </div>
+
+    <h2>Skills</h2>
+    <div class="card">
+      <ul>
+        <li>Programming: C, C++, Python, JavaScript</li>
+        <li>Microcontrollers: Arduino, ESP32</li>
+        <li>Automation Systems: Sensors, Servos, Relays</li>
+        <li>Web Development: HTML, CSS, basic JS</li>
+        <li>Hardware & Software Integration</li>
+      </ul>
+    </div>
+
+    <h2>Projects</h2>
+    <div class="card">
+      <ul>
+        <li>Smart Trash Bin (Arduino + Ultrasonic + Servo)</li>
+        <li>Hnad Tracking</li>
+        <li>Motor & LED control with Arduino</li>
+        <li>Simple Web App with database</li>
+      </ul>
+    </div>
+
+    <h2>Contact</h2>
+    <div class="card">
+      <p>Email: jumdomunaru@gmail.com</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 My Portfolio</p>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+
+    let stars = [];
+    const numStars = 120;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function initStars() {
+      stars = [];
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5,
+          alpha: Math.random(),
+          dx: (Math.random() - 0.5) * 0.2,
+          dy: (Math.random() - 0.5) * 0.2
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+        ctx.fill();
+      });
+    }
+
+    function updateStars() {
+      stars.forEach(star => {
+        star.x += star.dx;
+        star.y += star.dy;
+        if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+        if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+        star.alpha += (Math.random() - 0.5) * 0.05;
+        if (star.alpha < 0) star.alpha = 0;
+        if (star.alpha > 1) star.alpha = 1;
+      });
+    }
+
+    function animate() {
+      drawStars();
+      updateStars();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      initStars();
+    });
+
+    resizeCanvas();
+    initStars();
+    animate();
+  </script>
+
+</body>
+</html>
